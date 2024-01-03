@@ -3,8 +3,7 @@ import { defineCommand, runMain } from 'citty'
 import { r } from '@vyke/results'
 import { rootSola } from '../sola'
 import pkgJson from '../../package.json'
-import { generateApi } from '../'
-import { replaceApiSection } from '../readme'
+import { generateApi, replaceApiSection } from '../'
 import { readReadme, writeReadme } from '../files'
 
 const sola = rootSola.withTag('cli')
