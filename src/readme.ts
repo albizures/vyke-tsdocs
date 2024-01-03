@@ -3,7 +3,9 @@ import { r } from '@vyke/results'
 // import { rootSola } from './sola'
 
 // const sola = rootSola.withTag('readme')
-
+/**
+ * Replace the old api section with the given one
+ */
 export function replaceApiSection(readme: string, api: string) {
 	const lines = readme.split('\n')
 
@@ -15,7 +17,7 @@ export function replaceApiSection(readme: string, api: string) {
 	for (const line of lines) {
 		if (line.startsWith('#')) {
 			const currentLevel = [...line.matchAll(/#/g)].length
-			if (line.toUpperCase().includes('API')) {
+			if (isApiSection(line)) {
 				apiSectionFound = true
 				level = currentLevel
 				// adding a +1 to leave out the title
@@ -36,4 +38,14 @@ export function replaceApiSection(readme: string, api: string) {
 		api,
 		...lines.slice(endAt),
 	].join('\n'))
+}
+function isApiSection(line: string) {
+	// we start with something like "### api"
+	return line
+		// the '#'s are remove, leaving only " api"
+		.replaceAll(/#/g, '')
+		// now everything with upper cases " API"
+		.toUpperCase()
+		// now trim it "API"
+		.trim() === 'API'
 }
