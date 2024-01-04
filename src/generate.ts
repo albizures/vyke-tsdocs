@@ -79,7 +79,7 @@ export function generateApi() {
 			alias
 				? [
 						'> [!TIP]',
-						`> alias to \`${entry.alias}\``,
+						`> alias of \`${entry.alias}\``,
 					].join('\n')
 				: '',
 			examples.join('\n\n'),
