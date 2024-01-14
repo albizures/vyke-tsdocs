@@ -56,10 +56,20 @@ export function generateApi() {
 			// No need to walk any further, class expressions/inner declarations
 			// cannot be exported
 		}
-		else if (ts.isFunctionDeclaration(node) && node.name) {
+		else if ((ts.isFunctionDeclaration(node) || ts.isVariableDeclaration(node)) && node.name) {
 			const symbol = checker.getSymbolAtLocation(node.name)
 			if (symbol) {
 				entries.push(serializeSymbol(symbol, checker))
+			}
+		}
+		else if (ts.isVariableDeclarationList(node)) {
+			for (const declaration of node.declarations) {
+				if (declaration.name) {
+					const symbol = checker.getSymbolAtLocation(declaration.name)
+					if (symbol) {
+						entries.push(serializeSymbol(symbol, checker))
+					}
+				}
 			}
 		}
 		ts.forEachChild(node, visit)
@@ -135,12 +145,6 @@ function serializeClass(symbol: ts.Symbol, checker: ts.TypeChecker) {
 		symbol,
 		symbol.valueDeclaration!,
 	)
-
-	const a = constructorType.getConstructSignatures().map((value) => {
-		return checker.signatureToString(value)
-	})
-
-	sola.log(a)
 
 	entry.signature = checker.typeToString(constructorType)
 
