@@ -27,7 +27,7 @@ Make sure you have a API section in your README.md file
 
 ## API
 ### generateApi
-Generates api docs base onda the jsdocs on the exports functions
+Generates api docs base on the jsdocs on the exports functions
 
 ### asdf
 test eee

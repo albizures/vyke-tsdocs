@@ -6,7 +6,7 @@ import { rootSola } from './sola'
 
 const sola = rootSola.withTag('main')
 
-const fileName = './src/index.ts'
+const defaultFiles = ['./src/index.ts']
 
 export type DocEntry = {
 	name: string
@@ -17,15 +17,15 @@ export type DocEntry = {
 }
 
 /**
- * Generates api docs base onda the jsdocs on the exports functions
+ * Generates api docs base on the jsdocs on the exports functions
  */
-export function generateApi() {
+export function generateApi(files = defaultFiles) {
 	const root = process.cwd()
 
 	const config = JSON.parse(fs.readFileSync(path.join(root, 'tsconfig.json'), 'utf-8'))
 
 	const program = ts.createProgram(
-		[fileName],
+		files,
 		config,
 	)
 
@@ -62,16 +62,6 @@ export function generateApi() {
 				entries.push(serializeSymbol(symbol, checker))
 			}
 		}
-		else if (ts.isVariableDeclarationList(node)) {
-			for (const declaration of node.declarations) {
-				if (declaration.name) {
-					const symbol = checker.getSymbolAtLocation(declaration.name)
-					if (symbol) {
-						entries.push(serializeSymbol(symbol, checker))
-					}
-				}
-			}
-		}
 		ts.forEachChild(node, visit)
 	}
 
@@ -100,10 +90,24 @@ export function generateApi() {
 }
 
 function isNodeExported(node: ts.Node): boolean {
-	return (
-		((ts.getCombinedModifierFlags(node as ts.Declaration) & ts.ModifierFlags.Export) !== 0)
-		&& (!!node.parent && node.parent.kind === ts.SyntaxKind.SourceFile)
-	)
+	if ((ts.getCombinedModifierFlags(node as ts.Declaration) & ts.ModifierFlags.Export) !== 0) {
+		if (node.parent) {
+			if (node.parent.kind === ts.SyntaxKind.SourceFile) {
+				return true
+			}
+		}
+	}
+
+	if (node.parent) {
+		if (
+			// if the parent is the first statement of a variable declaration list which has been exported
+			(node.parent.kind === ts.SyntaxKind.FirstStatement || ts.isVariableDeclarationList(node.parent))
+			&& isNodeExported(node.parent)) {
+			return true
+		}
+	}
+
+	return false
 }
 
 function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker): DocEntry {
