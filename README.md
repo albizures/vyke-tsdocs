@@ -29,9 +29,6 @@ Make sure you have a API section in your README.md file
 ### generateApi
 Generates api docs base on the jsdocs on the exports functions
 
-### asdf
-test eee
-
 ### replaceApiSection
 Replace the old api section with the given one
 
