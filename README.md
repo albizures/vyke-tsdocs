@@ -32,7 +32,7 @@ Generates api docs base on the jsdocs on the exports functions
 ### replaceApiSection
 Replace the old api section with the given one
 
-# Others vyke projects
+## Others vyke projects
 - [Flowmodoro app by vyke](https://github.com/albizures/vyke-flowmodoro)
 - [@vyke/results](https://github.com/albizures/vyke-results)
 - [@vyke/val](https://github.com/albizures/vyke-val)

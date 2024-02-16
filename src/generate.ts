@@ -83,8 +83,13 @@ export function generateApi(files = defaultFiles) {
 					].join('\n')
 				: '',
 			examples.join('\n\n'),
-		].join('\n').trim()
-	}).join('\n\n').trim()
+		].join('\n')
+			.trim()
+	})
+	// removing items without documentation
+		.filter(Boolean)
+		.join('\n\n')
+		.trim()
 
 	return `${docs}\n`
 }
