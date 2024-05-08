@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { r } from '@vyke/results'
+import { unwrap } from '@vyke/results'
 import { replaceApiSection } from './readme'
 
 function baseReadme(apiSection: string) {
@@ -13,9 +13,8 @@ ${apiSection}
 `
 }
 it('should replace the api section', () => {
-	const apiSection = `## api
-something`
-	const result = r.unwrap(
+	const apiSection = `## api\nsomething`
+	const result = unwrap(
 		replaceApiSection(
 			baseReadme(apiSection),
 			'api update',
@@ -26,7 +25,7 @@ something`
 
 	expect(result).toBe(expected)
 
-	const secondResult = r.unwrap(
+	const secondResult = unwrap(
 		replaceApiSection(
 			expected,
 			'api update',

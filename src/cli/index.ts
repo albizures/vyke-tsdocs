@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { defineCommand, runMain } from 'citty'
-import { r } from '@vyke/results'
+import { toUnwrap, unwrap } from '@vyke/results'
 import { rootSola } from '../sola'
 import pkgJson from '../../package.json'
 import { generateApi, replaceApiSection } from '../'
@@ -18,12 +18,12 @@ const main = defineCommand({
 		sola.log('Generating api docs...')
 		const apiDocs = generateApi()
 
-		const readme = await r.toUnwrap(readReadme())
+		const readme = await toUnwrap(readReadme())
 
-		const readmeUpdate = r.unwrap(replaceApiSection(readme, apiDocs))
+		const readmeUpdate = unwrap(replaceApiSection(readme, apiDocs))
 
 		sola.log('Writing api docs into readme...')
-		await r.toUnwrap(writeReadme(readmeUpdate))
+		await toUnwrap(writeReadme(readmeUpdate))
 
 		sola.log('API docs updated!')
 	},

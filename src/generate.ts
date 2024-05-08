@@ -14,13 +14,19 @@ export type DocEntry = {
 	signature?: string
 	alias?: string
 	examples: Array<string>
+	index: number
+}
+
+type GenerateApiArgs = {
+	files: Array<string>
+	root: string
 }
 
 /**
  * Generates api docs base on the jsdocs on the exports functions
  */
-export function generateApi(files = defaultFiles) {
-	const root = process.cwd()
+export function generateApi(args?: GenerateApiArgs) {
+	const { files = defaultFiles, root = process.cwd() } = args ?? {}
 
 	const config = JSON.parse(fs.readFileSync(path.join(root, 'tsconfig.json'), 'utf-8'))
 
@@ -65,15 +71,17 @@ export function generateApi(files = defaultFiles) {
 		ts.forEachChild(node, visit)
 	}
 
-	const docs = entries.map((entry) => {
-		const { name, alias, description, examples } = entry
+	const docs = entries
+		.sort((a, b) => a.index - b.index)
+		.map((entry) => {
+			const { name, alias, description, examples } = entry
 
-		if (description.trim() === '') {
+			if (description.trim() === '') {
 			// skipping entries without a description
-			return ''
-		}
+				return ''
+			}
 
-		return [
+			return [
 			`### ${name}`,
 			description,
 			alias
@@ -83,9 +91,9 @@ export function generateApi(files = defaultFiles) {
 					].join('\n')
 				: '',
 			examples.join('\n\n'),
-		].join('\n')
-			.trim()
-	})
+			].join('\n')
+				.trim()
+		})
 	// removing items without documentation
 		.filter(Boolean)
 		.join('\n\n')
@@ -126,7 +134,7 @@ function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker): DocEntry {
 		name: symbol.getName(),
 		description,
 		signature,
-
+		index: Number.POSITIVE_INFINITY,
 		examples: [],
 
 	}
@@ -141,6 +149,11 @@ function serializeSymbol(symbol: ts.Symbol, checker: ts.TypeChecker): DocEntry {
 			entry.examples.push(
 				ts.displayPartsToString(tag.text),
 			)
+		}
+
+		if (tag.name === 'index') {
+			const index = Number(ts.displayPartsToString(tag.text))
+			entry.index = Number.isNaN(index) ? 0 : index
 		}
 	}
 	return entry

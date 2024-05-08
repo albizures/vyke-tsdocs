@@ -1,8 +1,7 @@
 {
 	"name": "@vyke/tsdocs",
 	"type": "module",
-	"version": "0.0.6",
-	"packageManager": "pnpm@8.11.0",
+	"version": "0.0.7",
 	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
 	"license": "MIT",
 	"keywords": [],
@@ -44,21 +43,21 @@
 		"typescript": "^5.*"
 	},
 	"dependencies": {
-		"@vyke/results": "^0.0.5",
-		"@vyke/sola": "^0.0.5",
-		"citty": "^0.1.5"
+		"@vyke/results": "^0.2.3",
+		"@vyke/sola": "^0.0.6",
+		"citty": "^0.1.6"
 	},
 	"devDependencies": {
-		"@antfu/eslint-config": "^2.6.1",
-		"@types/node": "^20.10.6",
+		"@antfu/eslint-config": "^2.17.0",
+		"@types/node": "^20.12.11",
 		"eslint": "^8.56.0",
-		"knip": "^3.9.0",
+		"knip": "^5.13.0",
 		"npm-run-all": "^4.1.5",
 		"standard-version": "^9.5.0",
 		"typescript": "^5.3.3",
 		"unbuild": "^2.0.0",
-		"vite-node": "^1.1.1",
-		"vitest": "^1.1.1"
+		"vite-node": "^1.6.0",
+		"vitest": "^1.6.0"
 	},
 	"standard-version": {
 		"skip": {

@@ -1,4 +1,4 @@
-import { r } from '@vyke/results'
+import { Err, Ok } from '@vyke/results'
 
 // import { rootSola } from './sola'
 
@@ -30,10 +30,10 @@ export function replaceApiSection(readme: string, api: string) {
 	}
 
 	if (!apiSectionFound) {
-		return r.err(new Error('API section not found'))
+		return Err(new Error('API section not found'))
 	}
 
-	return r.ok([
+	return Ok([
 		...lines.slice(0, startAt),
 		api,
 		...lines.slice(endAt),
