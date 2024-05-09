@@ -82,15 +82,15 @@ export function generateApi(args?: GenerateApiArgs) {
 			}
 
 			return [
-			`### ${name}`,
-			description,
-			alias
-				? [
+				`### ${name}`,
+				description,
+				alias
+					? [
 						'> [!TIP]',
 						`> alias of \`${entry.alias}\``,
 					].join('\n')
-				: '',
-			examples.join('\n\n'),
+					: '',
+				examples.join('\n\n'),
 			].join('\n')
 				.trim()
 		})
