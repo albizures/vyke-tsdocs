@@ -1,2 +1,2 @@
-export { generateApi, type DocEntry } from './generate'
+export { type DocEntry, generateApi } from './generate'
 export { replaceApiSection } from './readme'

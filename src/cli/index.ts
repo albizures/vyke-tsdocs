@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import { defineCommand, runMain } from 'citty'
 import { toUnwrap, unwrap } from '@vyke/results'
-import { rootSola } from '../sola'
-import pkgJson from '../../package.json'
+import { defineCommand, runMain } from 'citty'
 import { generateApi, replaceApiSection } from '../'
+import pkgJson from '../../package.json'
 import { readReadme, writeReadme } from '../files'
+import { rootSola } from '../sola'
 
 const sola = rootSola.withTag('cli')
 

@@ -1,6 +1,6 @@
-import process from 'node:process'
 import fs from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import ts from 'typescript'
 import { rootSola } from './sola'
 
@@ -82,17 +82,16 @@ export function generateApi(args?: GenerateApiArgs) {
 			}
 
 			return [
-				`### ${name}`,
+				`### ${name}\n`,
 				description,
 				alias
 					? [
-						'> [!TIP]',
-						`> alias of \`${entry.alias}\``,
-					].join('\n')
+							'> [!TIP]',
+							`> alias of \`${entry.alias}\``,
+						].join('\n')
 					: '',
 				examples.join('\n\n'),
-			].join('\n')
-				.trim()
+			].join('\n').trim()
 		})
 	// removing items without documentation
 		.filter(Boolean)

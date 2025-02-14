@@ -33,9 +33,15 @@ export function replaceApiSection(readme: string, api: string) {
 		return Err(new Error('API section not found'))
 	}
 
+	// const startLines = lines.slice(0, startAt)
+	// const lastStartLine = startLines[startLines.length - 1]
+	// if (lastStartLine && lastStartLine.trim() !== '') {
+	// 	startLines.push('\n')
+	// }
+
 	return Ok([
 		...lines.slice(0, startAt),
-		api,
+		`\n${api}`,
 		...lines.slice(endAt),
 	].join('\n'))
 }
