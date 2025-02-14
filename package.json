@@ -1,7 +1,7 @@
 {
 	"name": "@vyke/tsdocs",
 	"type": "module",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
 	"license": "MIT",
 	"keywords": [],
